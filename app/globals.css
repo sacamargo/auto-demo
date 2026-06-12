@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f7f6f3;
+  --surface: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #787774;
+  --border: #eaeaea;
+  --accent: #8b7355;
+  --accent-hover: #6f5c44;
+
+  --status-available-bg: #edf3ec;
+  --status-available-text: #346538;
+  --status-reserved-bg: #fbf3db;
+  --status-reserved-text: #956400;
+  --status-sold-bg: #fdebec;
+  --status-sold-text: #9f2f2d;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --header-height: 4.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif tracking-tight;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .pressable {
+    transition: transform 160ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .pressable:active {
+      transform: scale(0.97);
+    }
+  }
+
+  .card-hover {
+    transition:
+      border-color 200ms var(--ease-out),
+      box-shadow 200ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover:hover {
+      border-color: var(--foreground);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .image-hover {
+    transition: transform 300ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .image-hover {
+      transform: scale(1.02);
+    }
+  }
+
+  .fade-in {
+    animation: fadeInUp 600ms var(--ease-out) forwards;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .fade-in-delay-1 {
+    animation-delay: 80ms;
+  }
+  .fade-in-delay-2 {
+    animation-delay: 160ms;
+  }
+  .fade-in-delay-3 {
+    animation-delay: 240ms;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .image-hover,
+    .card-hover,
+    .pressable {
+      transition: none;
+    }
+  }
+}
