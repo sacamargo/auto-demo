@@ -65,20 +65,22 @@ git push -u origin main
 |----------|-------|---------|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://babdnxlifdxamwfukzxl.supabase.co` | Production |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Tu publishable key | Production |
-| `NEXT_PUBLIC_SITE_URL` | `https://tu-dominio.vercel.app` | Production |
+| `NEXT_PUBLIC_SITE_URL` | `https://auto-demo.vercel.app` (opcional — ya es el fallback en código) | Production |
 | `NEXT_PUBLIC_WHATSAPP` | `573028621190` | Production |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role (secreta) | Production |
 | `REVALIDATE_SECRET` | String aleatorio largo | Production |
 
 5. **Deploy**
 
-### Después del primer deploy
+### URL de producción
 
-Actualiza `NEXT_PUBLIC_SITE_URL` con la URL real de Vercel y redeploy.
+**`https://auto-demo.vercel.app`**
+
+Definida en `config/site.ts` como fallback en producción. Opcionalmente puedes repetirla en Vercel como `NEXT_PUBLIC_SITE_URL`.
 
 En **Supabase → Authentication → URL Configuration**:
-- **Site URL:** tu dominio de producción
-- **Redirect URLs:** `https://tu-dominio.vercel.app/**`
+- **Site URL:** `https://auto-demo.vercel.app`
+- **Redirect URLs:** `https://auto-demo.vercel.app/**`
 
 ---
 
@@ -116,5 +118,5 @@ En **Supabase → Authentication → URL Configuration**:
 
 1. Vercel → Project → **Domains** → agregar dominio
 2. Configurar DNS según instrucciones de Vercel
-3. Actualizar `NEXT_PUBLIC_SITE_URL` al dominio final
+3. Si cambias de dominio, actualizar `PRODUCTION_SITE_URL` en `config/site.ts` y Supabase Auth URLs
 4. Actualizar URLs en Supabase Auth

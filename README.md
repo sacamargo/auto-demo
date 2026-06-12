@@ -41,7 +41,7 @@ npm run dev
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Cliente + servidor | Publishable key |
 | `SUPABASE_SERVICE_ROLE_KEY` | **Solo servidor** | Nunca en GitHub |
 | `REVALIDATE_SECRET` | **Solo servidor** | Protege `/api/revalidate` |
-| `NEXT_PUBLIC_SITE_URL` | Cliente | URL del sitio |
+| `NEXT_PUBLIC_SITE_URL` | Cliente | URL del sitio (prod: `https://auto-demo.vercel.app` por defecto) |
 | `NEXT_PUBLIC_WHATSAPP` | Cliente | Número sin + |
 
 ## Panel de administración
@@ -96,6 +96,7 @@ npm run lint     # ESLint
 
 - [ ] Completar placeholders legales (NIT, dirección, reservas)
 - [ ] Cambiar marca AutoDemo por nombre real
-- [ ] Configurar `NEXT_PUBLIC_SITE_URL` en Vercel
+- [x] URL producción: `https://auto-demo.vercel.app` (en `config/site.ts`)
+- [ ] Configurar Supabase Auth URLs (Site URL + redirects)
 - [ ] Verificar RLS enabled en Supabase Dashboard
 - [ ] Rotar service role key si se expuso

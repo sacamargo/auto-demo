@@ -130,7 +130,7 @@ landing-carros/
 # Públicas (seguras para el browser)
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_SITE_URL=https://autodemo.co
+NEXT_PUBLIC_SITE_URL=https://auto-demo.vercel.app
 NEXT_PUBLIC_WHATSAPP=573000000000
 
 # Solo servidor — NUNCA NEXT_PUBLIC_

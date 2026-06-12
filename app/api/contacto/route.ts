@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { siteConfig } from '@/config/site';
 import { createClient } from '@/lib/supabase/server';
 import { getClientIp, checkRateLimit } from '@/lib/rate-limit';
 import { sanitizeText } from '@/lib/sanitize';
@@ -16,10 +17,7 @@ function isAllowedOrigin(request: Request): boolean {
 
   if (process.env.NODE_ENV !== 'production') return true;
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!siteUrl) return false;
-
-  const allowed = new URL(siteUrl).origin;
+  const allowed = new URL(siteConfig.url).origin;
   if (origin && origin !== allowed) return false;
   if (referer && !referer.startsWith(allowed)) return false;
   if (!origin && !referer) return false;

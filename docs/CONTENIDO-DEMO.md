@@ -7,7 +7,7 @@
 | Nombre | AutoDemo | Find & replace global `AutoDemo` |
 | Email | demo@autodemo.co | `.env` + footer |
 | WhatsApp | +57 300 000 0000 | `NEXT_PUBLIC_WHATSAPP=573000000000` |
-| Dominio | autodemo.co | `NEXT_PUBLIC_SITE_URL` |
+| Dominio | auto-demo.vercel.app | `config/site.ts` → `PRODUCTION_SITE_URL` |
 
 ---
 
