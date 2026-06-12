@@ -1,5 +1,5 @@
-/** URL de producción en Vercel (proyecto: auto-demo) */
-export const PRODUCTION_SITE_URL = 'https://auto-demo.vercel.app';
+/** URL de producción en Vercel (proyecto: auto-demo-six) */
+export const PRODUCTION_SITE_URL = 'https://auto-demo-six.vercel.app';
 
 export const siteConfig = {
   name: 'AutoDemo',

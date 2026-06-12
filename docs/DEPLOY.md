@@ -65,7 +65,7 @@ git push -u origin main
 |----------|-------|---------|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://babdnxlifdxamwfukzxl.supabase.co` | Production |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Tu publishable key | Production |
-| `NEXT_PUBLIC_SITE_URL` | `https://auto-demo.vercel.app` (opcional — ya es el fallback en código) | Production |
+| `NEXT_PUBLIC_SITE_URL` | `https://auto-demo-six.vercel.app` (opcional — ya es el fallback en código) | Production |
 | `NEXT_PUBLIC_WHATSAPP` | `573028621190` | Production |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role (secreta) | Production |
 | `REVALIDATE_SECRET` | String aleatorio largo | Production |
@@ -74,13 +74,13 @@ git push -u origin main
 
 ### URL de producción
 
-**`https://auto-demo.vercel.app`**
+**`https://auto-demo-six.vercel.app`**
 
 Definida en `config/site.ts` como fallback en producción. Opcionalmente puedes repetirla en Vercel como `NEXT_PUBLIC_SITE_URL`.
 
 En **Supabase → Authentication → URL Configuration**:
-- **Site URL:** `https://auto-demo.vercel.app`
-- **Redirect URLs:** `https://auto-demo.vercel.app/**`
+- **Site URL:** `https://auto-demo-six.vercel.app`
+- **Redirect URLs:** `https://auto-demo-six.vercel.app/**`
 
 ---
 
