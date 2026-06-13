@@ -102,6 +102,25 @@
     animation-delay: 240ms;
   }
 
+  .fade-in-delay-4 {
+    animation-delay: 320ms;
+  }
+
+  .reveal-panel {
+    animation: revealPanel 280ms var(--ease-out) forwards;
+  }
+
+  @keyframes revealPanel {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @keyframes fadeInUp {
     to {
       opacity: 1;

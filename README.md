@@ -14,6 +14,8 @@ Plataforma web para concesionario de vehículos. Catálogo público con diseño 
 | [Plan maestro](./docs/PLAN-MAESTRO.md) | Visión, alcance, fases |
 | [Arquitectura](./docs/ARQUITECTURA.md) | Stack, carpetas, flujo de datos |
 | [Seguridad](./docs/SEGURIDAD.md) | Checklist pre-deploy |
+| [Git workflow](./docs/GIT-WORKFLOW.md) | Ramas, commits, releases |
+| [Fase 6 — roadmap](./docs/FASE-6.md) | Features comerciales |
 | [Costos Vercel](./docs/COSTOS-VERCEL.md) | SSG/ISR y monitoreo |
 
 ## Stack
