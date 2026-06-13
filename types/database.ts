@@ -1,4 +1,5 @@
 export type VehicleStatus = 'disponible' | 'vendido' | 'reservado';
+export type LeadStatus = 'nuevo' | 'contactado' | 'cerrado' | 'descartado';
 export type FuelType = 'gasolina' | 'diesel' | 'hibrido' | 'electrico' | 'gas';
 export type TransmissionType = 'manual' | 'automatica' | 'cvt';
 
@@ -37,8 +38,20 @@ export interface Lead {
   email: string;
   message: string;
   privacy_accepted: boolean;
+  status: LeadStatus;
+  admin_notes: string;
   created_at: string;
+  updated_at: string;
 }
+
+export type LeadVehicleSummary = Pick<
+  Vehicle,
+  'id' | 'brand' | 'model' | 'year' | 'slug'
+>;
+
+export type LeadWithVehicle = Lead & {
+  vehicle: LeadVehicleSummary | null;
+};
 
 type LeadInsert = {
   name: string;
@@ -47,8 +60,11 @@ type LeadInsert = {
   message?: string;
   vehicle_id?: string | null;
   privacy_accepted: boolean;
+  status?: LeadStatus;
+  admin_notes?: string;
   id?: string;
   created_at?: string;
+  updated_at?: string;
 };
 
 export type Database = {
@@ -84,6 +100,7 @@ export type Database = {
     Functions: Record<string, never>;
     Enums: {
       vehicle_status: VehicleStatus;
+      lead_status: LeadStatus;
       fuel_type: FuelType;
       transmission_type: TransmissionType;
     };

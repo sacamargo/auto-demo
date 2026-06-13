@@ -1,4 +1,4 @@
-import type { FuelType, TransmissionType, VehicleStatus } from '@/types/database';
+import type { FuelType, LeadStatus, TransmissionType, VehicleStatus } from '@/types/database';
 
 const fuelLabels: Record<FuelType, string> = {
   gasolina: 'Gasolina',
@@ -20,6 +20,13 @@ const statusLabels: Record<VehicleStatus, string> = {
   vendido: 'Vendido',
 };
 
+const leadStatusLabels: Record<LeadStatus, string> = {
+  nuevo: 'Nuevo',
+  contactado: 'Contactado',
+  cerrado: 'Cerrado',
+  descartado: 'Descartado',
+};
+
 export function getFuelLabel(fuel: FuelType) {
   return fuelLabels[fuel];
 }
@@ -30,4 +37,8 @@ export function getTransmissionLabel(transmission: TransmissionType) {
 
 export function getStatusLabel(status: VehicleStatus) {
   return statusLabels[status];
+}
+
+export function getLeadStatusLabel(status: LeadStatus) {
+  return leadStatusLabels[status];
 }
