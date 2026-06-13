@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getClientIp, checkRateLimit } from '@/lib/rate-limit';
 import { sanitizeText } from '@/lib/sanitize';
 import { contactSchema } from '@/lib/validations/contact';
+import { sendLeadAlertEmail } from '@/lib/notifications/lead-alert';
 import type { Database } from '@/types/database';
 
 type LeadInsert = Database['public']['Tables']['leads']['Insert'];
@@ -90,6 +91,16 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    void sendLeadAlertEmail({
+      name: lead.name,
+      phone: lead.phone,
+      email: lead.email,
+      message,
+      vehicleInterest: data.vehicle_interest ?? null,
+    }).catch((err) => {
+      console.error('Lead alert email failed:', err);
+    });
 
     return NextResponse.json({
       success: true,

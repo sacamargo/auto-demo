@@ -41,7 +41,7 @@ export async function signInAdmin(
     return { error: 'No tienes permisos de administrador' };
   }
 
-  redirect('/admin/vehiculos');
+  redirect('/admin');
 }
 
 export async function signOutAdmin() {

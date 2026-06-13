@@ -48,7 +48,7 @@ export async function updateSession(request: NextRequest) {
 
   if (isLoginPage && isAdmin) {
     const dashboardUrl = request.nextUrl.clone();
-    dashboardUrl.pathname = '/admin/vehiculos';
+    dashboardUrl.pathname = '/admin';
     dashboardUrl.search = '';
     return NextResponse.redirect(dashboardUrl);
   }

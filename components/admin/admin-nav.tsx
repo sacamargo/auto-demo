@@ -9,12 +9,16 @@ type AdminNavProps = {
 };
 
 const navItems = [
+  { href: '/admin', label: 'Panel', match: '/admin' },
   { href: '/admin/vehiculos', label: 'Inventario', match: '/admin/vehiculos' },
   { href: '/admin/leads', label: 'Leads', match: '/admin/leads', badge: true },
   { href: '/admin/vehiculos/nuevo', label: 'Agregar vehículo', match: '/admin/vehiculos/nuevo' },
 ];
 
 function isActive(pathname: string, match: string) {
+  if (match === '/admin') {
+    return pathname === '/admin';
+  }
   if (match === '/admin/vehiculos') {
     return (
       pathname.startsWith('/admin/vehiculos') &&
@@ -28,7 +32,7 @@ export function AdminNav({ nuevosCount }: AdminNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden items-center gap-6 sm:flex">
+    <nav className="hidden items-center gap-6 lg:flex">
       {navItems.map((item) => (
         <Link
           key={item.href}

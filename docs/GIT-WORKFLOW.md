@@ -1,6 +1,6 @@
 # Flujo Git — AutoDemo
 
-Estrategia **Git Flow simplificado** para features claras, preview en `develop` y producción en `main`.
+Estrategia **Git Flow simplificado**: una feature por rama, preview en la rama, integración en `develop`, producción en `main`.
 
 ---
 
@@ -9,8 +9,8 @@ Estrategia **Git Flow simplificado** para features claras, preview en `develop` 
 | Rama | Propósito | Deploy Vercel |
 |------|-----------|---------------|
 | `main` | Producción estable | **Production** → auto-demo-six.vercel.app |
-| `develop` | Integración y pruebas | **Preview** permanente (opcional) |
-| `feature/*` | Una funcionalidad por rama | Preview automático por PR |
+| `develop` | Integración previa a prod | **Preview** permanente |
+| `feature/*` | Una funcionalidad por rama | Preview automático por rama/PR |
 
 ---
 
@@ -24,46 +24,45 @@ fix/contact-form-origin
 chore/update-deps
 ```
 
-- **feature/** — funcionalidad nueva
-- **fix/** — corrección de bug
-- **chore/** — mantenimiento (deps, docs, config)
-
 ---
 
-## Ciclo por feature
+## Ciclo por feature (flujo acordado)
 
 ```bash
-# 1. Partir siempre de develop actualizado
-git checkout develop
-git pull origin develop
+# 1. Partir de main actualizado
+git checkout main
+git pull origin main
 
 # 2. Crear rama de feature
 git checkout -b feature/nombre-descriptivo
 
-# 3. Trabajar, commitear con mensajes claros
+# 3. Desarrollar y commitear
 git add .
-git commit -m "feat(admin): descripción breve del cambio"
-
-# 4. Subir y abrir PR hacia develop (recomendado)
+git commit -m "feat(admin): descripción breve"
 git push -u origin feature/nombre-descriptivo
-# GitHub → Pull Request: feature/... → develop
 
-# 5. Probar en preview de Vercel (URL del PR o de develop)
+# 4. PROBAR en preview de Vercel (URL de la rama feature)
+#    npm run build local también recomendado
 
-# 6. Merge a develop
+# 5. Merge a develop → probar de nuevo
 git checkout develop
+git pull origin develop
 git merge feature/nombre-descriptivo
 git push origin develop
+# Probar preview de develop
 
-# 7. Cuando develop esté estable → release a producción
+# 6. Merge a main → deploy producción
 git checkout main
+git pull origin main
 git merge develop
 git push origin main
 
-# 8. Tag de versión (opcional pero recomendado)
-git tag -a v0.2.0 -m "Bandeja de leads + dashboard"
-git push origin v0.2.0
+# 7. Tag de versión
+git tag -a v0.3.0 -m "Dashboard admin + alertas de lead"
+git push origin v0.3.0
 ```
+
+**Orden:** `main` → `feature/*` → probar → `develop` → probar → `main`
 
 ---
 
@@ -80,14 +79,6 @@ Formato: `tipo(alcance): descripción`
 | `refactor` | Refactor sin cambiar comportamiento |
 | `chore` | Config, deps, scripts |
 
-Ejemplos:
-```
-feat(admin): bandeja de leads con filtros por estado
-feat(public): página de financiación con FAQ
-fix(api): validación origin en formulario contacto
-docs: actualizar GIT-WORKFLOW
-```
-
 ---
 
 ## Versionado (semver)
@@ -102,11 +93,11 @@ Registrar cambios en [`CHANGELOG.md`](../CHANGELOG.md).
 
 ---
 
-## Fase 6 — Roadmap de features
+## Fase 6 — Roadmap
 
 | # | Rama | Contenido | Versión |
 |---|------|-----------|---------|
-| 1 | `feature/admin-leads-inbox` | Bandeja leads, estados, notas | v0.2.0 |
+| 1 | `feature/admin-leads-inbox` | Bandeja leads | v0.2.0 ✅ |
 | 2 | `feature/admin-dashboard-alerts` | Dashboard + alertas email | v0.3.0 |
 | 3 | `feature/public-financing-faq-map` | Financiación, FAQ, mapa | v0.4.0 |
 
@@ -115,15 +106,15 @@ Registrar cambios en [`CHANGELOG.md`](../CHANGELOG.md).
 ## Reglas
 
 1. **Nunca** commitear `.env.local` ni secretos.
-2. **Una feature = una rama** — no mezclar leads + financiación en la misma rama.
-3. **Migration SQL** — numerar en orden (`004_...sql`); ejecutar en Supabase antes de probar en preview.
-4. **Build local** antes de merge a `develop`: `npm run build`
-5. **Producción solo desde `main`** — nunca push directo a main sin pasar por develop.
+2. **Una feature = una rama** — no mezclar funcionalidades.
+3. **Migration SQL** — ejecutar en Supabase antes de probar preview.
+4. **`npm run build`** antes de merge a `develop`.
+5. **Producción solo desde `main`**, siempre después de probar en `develop`.
 
 ---
 
-## Vercel — configuración recomendada
+## Vercel
 
 - **Production Branch:** `main`
-- **Preview:** todas las demás ramas (incl. `develop`)
+- **Preview:** `develop`, `feature/*` y PRs
 - Variables de entorno: duplicar en **Production** y **Preview**

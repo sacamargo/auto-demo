@@ -69,6 +69,9 @@ git push -u origin main
 | `NEXT_PUBLIC_WHATSAPP` | `573028621190` | Production |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role (secreta) | Production |
 | `REVALIDATE_SECRET` | String aleatorio largo | Production |
+| `ADMIN_ALERT_EMAIL` | Email que recibe alertas de leads | Production + Preview |
+| `RESEND_API_KEY` | API key de [Resend](https://resend.com) | Production + Preview |
+| `RESEND_FROM_EMAIL` | Remitente verificado (ej. `AutoDemo <notificaciones@tudominio.com>`) | Production + Preview |
 
 5. **Deploy**
 

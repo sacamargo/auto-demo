@@ -21,7 +21,7 @@ export async function AdminHeader() {
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
           <div className="flex items-center gap-8">
-            <Link href="/admin/vehiculos" className="font-serif text-lg">
+            <Link href="/admin" className="font-serif text-lg">
               {siteConfig.name}
             </Link>
             <AdminNav nuevosCount={nuevosCount} />

@@ -5,9 +5,15 @@ Versionado [SemVer](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
-### Fase 6 — pendiente
+### Feature 2 — `feature/admin-dashboard-alerts` (v0.3.0, en preview)
 
-- Dashboard + alertas de lead (`feature/admin-dashboard-alerts`)
+- Dashboard admin en `/admin` con métricas de leads e inventario
+- Panel de leads recientes y acciones rápidas
+- Alerta por email al recibir un lead (Resend)
+- Variables: `ADMIN_ALERT_EMAIL`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
+
+### Feature 3 — pendiente
+
 - Páginas Financiación, FAQ y Mapa (`feature/public-financing-faq-map`)
 
 ---

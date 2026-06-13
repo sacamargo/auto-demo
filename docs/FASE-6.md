@@ -27,8 +27,8 @@ Ver [GIT-WORKFLOW.md](./GIT-WORKFLOW.md).
 | Entregable | Detalle |
 |------------|---------|
 | `/admin` dashboard | Stats: leads semana, nuevos, inventario |
-| Alerta email | Al crear lead → email al admin |
-| Env | `ADMIN_ALERT_EMAIL`, `RESEND_API_KEY` (o similar) |
+| Alerta email | Al crear lead → email vía Resend |
+| Env | `ADMIN_ALERT_EMAIL`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL` |
 
 ---
 
