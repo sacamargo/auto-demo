@@ -114,7 +114,10 @@ export default async function VehicleDetailPage({ params }: PageProps) {
             <Button href={getWhatsAppUrl(vehicle)} size="lg">
               Contactar por WhatsApp
             </Button>
-            <Button href="#cotizacion" variant="outline" size="lg">
+            <Button href={`/catalogo/${vehicle.slug}/financiacion`} variant="outline" size="lg">
+              Simular financiación
+            </Button>
+            <Button href="#cotizacion" variant="ghost" size="lg">
               Solicitar cotización
             </Button>
           </div>

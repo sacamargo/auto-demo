@@ -38,11 +38,11 @@ Ver [GIT-WORKFLOW.md](./GIT-WORKFLOW.md).
 
 | Entregable | Detalle |
 |------------|---------|
-| `/financiacion` | Cuotas, permuta, garantía |
-| `/preguntas-frecuentes` | FAQ accordion reutilizable |
-| `/ubicacion` | Mapa, horarios, Waze |
-| Config | `config/site-content.ts` editable |
-| Nav + footer | Links a nuevas páginas |
+| `/financiacion` | General: calculadora, beneficios, pasos, formulario |
+| `/catalogo/[slug]/financiacion` | Por vehículo: precio real + misma experiencia |
+| `/preguntas-frecuentes` | FAQ accordion por categoría |
+| `/ubicacion` | Mapa embed, horarios, Waze/Google |
+| Config | `config/site-content.ts` |
 
 ---
 

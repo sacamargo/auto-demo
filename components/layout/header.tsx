@@ -10,6 +10,7 @@ import { Logo } from '@/components/layout/logo';
 const navItems = [
   { href: '/', label: 'Inicio' },
   { href: '/catalogo', label: 'Catálogo' },
+  { href: '/financiacion', label: 'Financiación' },
   { href: '/comparar', label: 'Comparar' },
   { href: '/#contacto', label: 'Contacto' },
 ];

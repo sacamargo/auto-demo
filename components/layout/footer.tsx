@@ -6,7 +6,10 @@ import { Logo } from '@/components/layout/logo';
 const footerLinks = {
   navegacion: [
     { href: '/catalogo', label: 'Catálogo' },
+    { href: '/financiacion', label: 'Financiación' },
     { href: '/comparar', label: 'Comparar' },
+    { href: '/preguntas-frecuentes', label: 'Preguntas frecuentes' },
+    { href: '/ubicacion', label: 'Ubicación' },
     { href: '/#contacto', label: 'Contacto' },
   ],
   legal: [

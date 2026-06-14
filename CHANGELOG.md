@@ -5,16 +5,13 @@ Versionado [SemVer](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
-### Feature 2 — `feature/admin-dashboard-alerts` (v0.3.0, en preview)
+### Feature 3 — `feature/public-financing-faq-map` (v0.4.0, en preview)
 
-- Dashboard admin en `/admin` con métricas de leads e inventario
-- Panel de leads recientes y acciones rápidas
-- Alerta por email al recibir un lead (Resend)
-- Variables: `ADMIN_ALERT_EMAIL`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
-
-### Feature 3 — pendiente
-
-- Páginas Financiación, FAQ y Mapa (`feature/public-financing-faq-map`)
+- `/financiacion` — página general con calculadora, beneficios y pasos
+- `/catalogo/[slug]/financiacion` — simulación por vehículo
+- `/preguntas-frecuentes` — FAQ por categorías con acordeón
+- `/ubicacion` — mapa, horarios y links Waze/Google Maps
+- Contenido editable en `config/site-content.ts`
 
 ---
 
