@@ -40,3 +40,25 @@ export function calculateFinancedAmount(
 ): number {
   return Math.max(priceCop - calculateDownPayment(priceCop, downPaymentPercent), 0);
 }
+
+/** Parsea input de precio COP (acepta puntos, comas, espacios). */
+export function parseCopInput(value: string): number {
+  const digits = value.replace(/\D/g, '');
+  if (!digits) return 0;
+  return Number(digits);
+}
+
+/** Formato para mostrar en input mientras escribe. */
+export function formatCopInput(value: number): string {
+  if (value <= 0) return '';
+  return new Intl.NumberFormat('es-CO').format(value);
+}
+
+export function clampPrice(
+  value: number,
+  min: number,
+  max: number
+): number {
+  if (value <= 0) return min;
+  return Math.min(Math.max(value, min), max);
+}

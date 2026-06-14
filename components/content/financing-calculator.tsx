@@ -6,14 +6,20 @@ import {
   calculateDownPayment,
   calculateFinancedAmount,
   calculateMonthlyPayment,
+  clampPrice,
+  formatCopInput,
+  parseCopInput,
 } from '@/lib/financing';
 import { formatPriceCop } from '@/lib/vehicles';
 import { FadeIn } from '@/components/motion/fade-in';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 type FinancingCalculatorProps = {
   vehiclePrice: number;
   vehicleLabel?: string;
+  /** En /financiacion el usuario puede editar el valor del vehículo */
+  priceEditable?: boolean;
   className?: string;
 };
 
@@ -22,47 +28,99 @@ const { calculator } = financingContent;
 export function FinancingCalculator({
   vehiclePrice,
   vehicleLabel,
+  priceEditable = false,
   className,
 }: FinancingCalculatorProps) {
+  const initialPrice = priceEditable
+    ? calculator.defaultReferencePrice
+    : vehiclePrice;
+
+  const [price, setPrice] = useState(initialPrice);
+  const [priceInput, setPriceInput] = useState(formatCopInput(initialPrice));
   const [downPaymentPercent, setDownPaymentPercent] = useState<number>(
     calculator.defaultDownPaymentPercent
   );
   const [months, setMonths] = useState<number>(calculator.defaultMonths);
 
+  const effectivePrice = priceEditable ? price : vehiclePrice;
+
   const downPayment = useMemo(
-    () => calculateDownPayment(vehiclePrice, downPaymentPercent),
-    [vehiclePrice, downPaymentPercent]
+    () => calculateDownPayment(effectivePrice, downPaymentPercent),
+    [effectivePrice, downPaymentPercent]
   );
 
   const financed = useMemo(
-    () => calculateFinancedAmount(vehiclePrice, downPaymentPercent),
-    [vehiclePrice, downPaymentPercent]
+    () => calculateFinancedAmount(effectivePrice, downPaymentPercent),
+    [effectivePrice, downPaymentPercent]
   );
 
   const monthly = useMemo(
     () =>
       calculateMonthlyPayment(
-        vehiclePrice,
+        effectivePrice,
         downPaymentPercent,
         months,
         calculator.defaultAnnualRate
       ),
-    [vehiclePrice, downPaymentPercent, months]
+    [effectivePrice, downPaymentPercent, months]
   );
+
+  function handlePriceChange(raw: string) {
+    setPriceInput(raw);
+    const parsed = parseCopInput(raw);
+    if (parsed === 0) {
+      setPrice(0);
+      return;
+    }
+    setPrice(clampPrice(parsed, calculator.minPrice, calculator.maxPrice));
+  }
+
+  function handlePriceBlur() {
+    const parsed = parseCopInput(priceInput);
+    const clamped = clampPrice(
+      parsed || calculator.defaultReferencePrice,
+      calculator.minPrice,
+      calculator.maxPrice
+    );
+    setPrice(clamped);
+    setPriceInput(formatCopInput(clamped));
+  }
 
   return (
     <FadeIn className={cn('rounded-md border border-border bg-surface p-6 md:p-8', className)}>
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="font-serif text-2xl">Simula tu cuota</h2>
           {vehicleLabel && (
             <p className="mt-1 text-sm text-accent">{vehicleLabel}</p>
           )}
         </div>
-        <p className="font-mono text-xl text-foreground md:text-2xl">
-          {formatPriceCop(vehiclePrice)}
-        </p>
+        {!priceEditable && (
+          <p className="font-mono text-xl text-foreground md:text-2xl">
+            {formatPriceCop(effectivePrice)}
+          </p>
+        )}
       </div>
+
+      {priceEditable && (
+        <div className="mt-6">
+          <Input
+            label="Valor del vehículo a financiar"
+            id="financing-price"
+            inputMode="numeric"
+            value={priceInput}
+            onChange={(e) => handlePriceChange(e.target.value)}
+            onBlur={handlePriceBlur}
+            placeholder={formatCopInput(calculator.defaultReferencePrice)}
+            className="font-mono text-lg"
+          />
+          <p className="mt-2 text-xs text-muted">
+            Ingresa el valor en pesos colombianos (COP). Rango referencial:{' '}
+            {formatPriceCop(calculator.minPrice)} –{' '}
+            {formatPriceCop(calculator.maxPrice)}.
+          </p>
+        </div>
+      )}
 
       <div className="mt-8 space-y-8">
         <SliderField
@@ -73,6 +131,7 @@ export function FinancingCalculator({
           step={5}
           value={downPaymentPercent}
           onChange={setDownPaymentPercent}
+          disabled={effectivePrice <= 0}
         />
 
         <div>
@@ -85,9 +144,10 @@ export function FinancingCalculator({
               <button
                 key={option}
                 type="button"
+                disabled={effectivePrice <= 0}
                 onClick={() => setMonths(option)}
                 className={cn(
-                  'rounded-full border px-3 py-1.5 text-xs font-medium transition-colors duration-200 ease-out',
+                  'rounded-full border px-3 py-1.5 text-xs font-medium transition-colors duration-200 ease-out disabled:opacity-40',
                   months === option
                     ? 'border-foreground bg-foreground text-background'
                     : 'border-border text-muted hover:border-foreground hover:text-foreground'
@@ -105,7 +165,7 @@ export function FinancingCalculator({
         <ResultItem label="Monto financiado" value={formatPriceCop(financed)} />
         <ResultItem
           label="Cuota mensual est."
-          value={formatPriceCop(monthly)}
+          value={effectivePrice > 0 ? formatPriceCop(monthly) : '—'}
           highlight
         />
       </div>
@@ -125,6 +185,7 @@ function SliderField({
   step,
   value,
   onChange,
+  disabled,
 }: {
   label: string;
   valueLabel: string;
@@ -133,9 +194,10 @@ function SliderField({
   step: number;
   value: number;
   onChange: (value: number) => void;
+  disabled?: boolean;
 }) {
   return (
-    <div>
+    <div className={cn(disabled && 'opacity-40')}>
       <div className="flex items-center justify-between gap-4">
         <span className="text-sm text-muted">{label}</span>
         <span className="font-mono text-sm text-foreground">{valueLabel}</span>
@@ -146,8 +208,9 @@ function SliderField({
         max={max}
         step={step}
         value={value}
+        disabled={disabled}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="mt-3 h-1 w-full cursor-pointer appearance-none rounded-full bg-border accent-accent"
+        className="mt-3 h-1 w-full cursor-pointer appearance-none rounded-full bg-border accent-accent disabled:cursor-not-allowed"
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}

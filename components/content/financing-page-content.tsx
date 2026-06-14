@@ -28,7 +28,8 @@ export function FinancingPageContent({
   backLabel,
 }: FinancingPageContentProps) {
   const isVehiclePage = Boolean(vehicle);
-  const referencePrice = vehicle?.price_cop ?? 250_000_000;
+  const referencePrice =
+    vehicle?.price_cop ?? financingContent.calculator.defaultReferencePrice;
   const vehicleLabel = vehicle
     ? `${vehicle.brand} ${vehicle.model} ${vehicle.year}`
     : undefined;
@@ -81,6 +82,7 @@ export function FinancingPageContent({
         <FinancingCalculator
           vehiclePrice={referencePrice}
           vehicleLabel={vehicleLabel}
+          priceEditable={!isVehiclePage}
         />
 
         <FadeIn delay={2} className="flex flex-col justify-center space-y-6">

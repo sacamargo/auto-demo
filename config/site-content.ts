@@ -63,6 +63,10 @@ export const financingContent = {
     'Opciones para independientes y pensionados',
   ],
   calculator: {
+    /** Valor inicial en /financiacion (editable por el usuario) */
+    defaultReferencePrice: 250_000_000,
+    minPrice: 20_000_000,
+    maxPrice: 2_000_000_000,
     defaultDownPaymentPercent: 30,
     defaultMonths: 48,
     /** Tasa nominal anual de referencia (decimal). Solo estimación demo. */
