@@ -1,5 +1,6 @@
 import {
   getGoogleMapsUrl,
+  getMapEmbedUrl,
   getWazeUrl,
   locationContent,
 } from '@/config/site-content';
@@ -10,9 +11,11 @@ import { Button } from '@/components/ui/button';
 
 export function LocationPageContent() {
   const { lat, lng } = locationContent.coordinates;
-  const googleUrl = getGoogleMapsUrl(lat, lng);
+  const { fullAddress } = locationContent;
+  const googleUrl = getGoogleMapsUrl(fullAddress);
   const wazeUrl = getWazeUrl(lat, lng);
-  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent('Hola, quiero agendar una visita al showroom.')}`;
+  const mapEmbedUrl = getMapEmbedUrl(fullAddress);
+  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent('Hola, quiero agendar una visita al showroom en Riomar, Barranquilla.')}`;
 
   return (
     <>
@@ -23,9 +26,7 @@ export function LocationPageContent() {
           <div className="rounded-md border border-border bg-surface p-6">
             <h2 className="font-serif text-2xl">{locationContent.name}</h2>
             <address className="mt-4 not-italic text-muted leading-relaxed">
-              {locationContent.address}
-              <br />
-              {locationContent.city}, {locationContent.country}
+              {locationContent.fullAddress}
             </address>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -58,23 +59,13 @@ export function LocationPageContent() {
             </ul>
             <p className="mt-4 text-xs text-muted">{locationContent.parking}</p>
           </div>
-
-          <div className="rounded-md border border-dashed border-accent/30 bg-[var(--status-reserved-bg)] p-4 text-sm text-[var(--status-reserved-text)]">
-            <p className="text-xs font-medium uppercase tracking-[0.05em]">
-              Completar antes de producción
-            </p>
-            <p className="mt-2">
-              Actualiza dirección, coordenadas y mapa en{' '}
-              <code className="text-xs">config/site-content.ts</code>.
-            </p>
-          </div>
         </FadeIn>
 
         <FadeIn delay={1}>
           <div className="overflow-hidden rounded-md border border-border bg-surface">
             <iframe
               title={`Mapa — ${locationContent.name}`}
-              src={locationContent.mapEmbedUrl}
+              src={mapEmbedUrl}
               className="aspect-[4/3] w-full border-0 lg:aspect-square"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

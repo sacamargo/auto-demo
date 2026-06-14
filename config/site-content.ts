@@ -185,30 +185,33 @@ export const locationContent = {
     eyebrow: 'Visítanos',
     title: 'Ubicación y horarios',
     description:
-      'Atención personalizada en showroom. Te recomendamos agendar cita para asegurar disponibilidad del vehículo que te interesa.',
+      'Showroom en Riomar, Barranquilla. Te recomendamos agendar cita para asegurar disponibilidad del vehículo que te interesa.',
   },
-  name: 'Showroom AutoDemo',
-  address: 'Carrera [COMPLETAR] # [COMPLETAR], Medellín, Antioquia',
-  city: 'Medellín',
+  name: 'AutoDemo — Riomar',
+  address: 'Cl. 98 #52-115, Riomar',
+  city: 'Barranquilla, Atlántico',
   country: 'Colombia',
-  /** Coordenadas demo — reemplazar con ubicación real */
+  fullAddress:
+    'Cl. 98 #52-115, Riomar, Barranquilla, Atlántico, Colombia',
+  /** Centro Comercial Buenavista — Cl. 98 #52-115 */
   coordinates: {
-    lat: 6.2442,
-    lng: -75.5812,
+    lat: 11.013872,
+    lng: -74.826721,
   },
   hours: [
     { days: 'Lunes a viernes', time: '9:00 a.m. – 6:00 p.m.' },
     { days: 'Sábados', time: '9:00 a.m. – 2:00 p.m.' },
     { days: 'Domingos y festivos', time: 'Cerrado' },
   ],
-  parking: 'Parqueadero para visitantes (confirmar disponibilidad al agendar).',
-  /** Google Maps embed — actualizar con pin real del cliente */
-  mapEmbedUrl:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.878704689798!2d-75.5812!3d6.2442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTQnMzkuMSJOIDc1wrAzNCc1Mi4zIlc!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco',
+  parking: 'Parqueadero del centro comercial (Riomar).',
 } as const;
 
-export function getGoogleMapsUrl(lat: number, lng: number) {
-  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+export function getMapEmbedUrl(query: string) {
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}&hl=es&z=17&output=embed`;
+}
+
+export function getGoogleMapsUrl(query: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 export function getWazeUrl(lat: number, lng: number) {
