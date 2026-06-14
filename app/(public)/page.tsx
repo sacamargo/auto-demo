@@ -3,6 +3,7 @@ import { siteConfig } from '@/config/site';
 import { resolveImageUrl } from '@/lib/vehicles';
 import { getFeaturedVehicles } from '@/lib/vehicles.server';
 import { QuoteForm } from '@/components/forms/quote-form';
+import { HomeLocationSection } from '@/components/content/home-location-section';
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/layout/container';
 import { VehicleCard } from '@/components/catalog/vehicle-card';
@@ -94,6 +95,8 @@ export default async function HomePage() {
           </div>
         </Container>
       </section>
+
+      <HomeLocationSection />
 
       <section id="contacto" className="border-t border-border bg-surface py-section">
         <Container>
