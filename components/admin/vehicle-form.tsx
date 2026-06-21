@@ -1,10 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { saveVehicle } from '@/lib/actions/vehicles';
+import { useState } from 'react';
+import { saveVehicleMetadata } from '@/lib/actions/vehicles';
 import type { Vehicle } from '@/types/database';
 import { ImageUpload } from '@/components/admin/image-upload';
+import { useUploadQueue } from '@/components/admin/upload-queue/upload-queue-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,22 +20,15 @@ const selectClass =
 
 export function VehicleForm({ vehicle }: VehicleFormProps) {
   const router = useRouter();
+  const { enqueueUpload } = useUploadQueue();
   const [deletedIds, setDeletedIds] = useState<string[]>([]);
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
-  const [savedId, setSavedId] = useState<string | undefined>();
 
   const existingCount =
     (vehicle?.vehicle_images?.length ?? 0) - deletedIds.length;
-
-  useEffect(() => {
-    if (saved && savedId && !vehicle) {
-      router.push(`/admin/vehiculos/${savedId}`);
-      router.refresh();
-    }
-  }, [saved, savedId, vehicle, router]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,20 +36,39 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
     setError('');
     setSaved(false);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     formData.set('deleted_images', JSON.stringify(deletedIds));
     formData.set('existing_image_count', String(Math.max(0, existingCount)));
-    newFiles.forEach((file) => formData.append('images', file));
 
-    const result = await saveVehicle({ success: false }, formData);
+    const brand = formData.get('brand')?.toString().trim() ?? '';
+    const model = formData.get('model')?.toString().trim() ?? '';
+    const vehicleLabel = [brand, model].filter(Boolean).join(' ') || 'Vehículo';
 
-    if (result.success) {
+    const result = await saveVehicleMetadata(formData);
+
+    if (result.success && result.vehicleId) {
       setSaved(true);
-      setSavedId(result.vehicleId);
-      if (vehicle) router.refresh();
+
+      if (newFiles.length > 0) {
+        enqueueUpload({
+          vehicleId: result.vehicleId,
+          vehicleLabel,
+          files: newFiles,
+          startSortOrder: Math.max(0, existingCount),
+        });
+        setNewFiles([]);
+      }
+
+      if (!vehicle) {
+        router.push(`/admin/vehiculos/${result.vehicleId}`);
+      } else {
+        router.refresh();
+      }
     } else {
       setError(result.error ?? 'Error al guardar');
     }
+
     setPending(false);
   }
 
@@ -195,6 +208,10 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
           onDeletedChange={setDeletedIds}
           onNewFilesChange={setNewFiles}
         />
+        <p className="text-xs text-muted">
+          Las fotos se optimizan y suben en segundo plano. Puedes seguir creando
+          otros vehículos mientras la cola trabaja.
+        </p>
       </section>
 
       {error && (
@@ -205,7 +222,7 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
 
       {saved && vehicle && (
         <p className="text-sm text-[var(--status-available-text)]">
-          Cambios guardados correctamente.
+          Cambios guardados.
         </p>
       )}
 
