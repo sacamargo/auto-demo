@@ -70,10 +70,10 @@ export function VehicleCard({ vehicle, index = 0, className }: VehicleCardProps)
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col gap-4 p-5 md:p-6">
-        <div className="space-y-2">
+      <div className="flex flex-1 flex-col gap-3 p-4 min-[375px]:gap-4 min-[375px]:p-5 md:p-6">
+        <div className="space-y-1.5 min-[375px]:space-y-2">
           <Link href={`/catalogo/${vehicle.slug}`}>
-            <h3 className="font-serif text-xl text-foreground">
+            <h3 className="font-serif text-lg text-foreground min-[375px]:text-xl">
               {vehicle.brand} {vehicle.model}
             </h3>
           </Link>
@@ -84,22 +84,27 @@ export function VehicleCard({ vehicle, index = 0, className }: VehicleCardProps)
           <p className="text-xs text-muted">{formatMileage(vehicle.mileage_km)}</p>
         </div>
 
-        <div className="flex items-center justify-between gap-2">
-          <p className="font-mono text-lg text-foreground">
+        <div className="flex items-start justify-between gap-2">
+          <p className="price-display-sm text-foreground">
             {formatPriceCop(vehicle.price_cop)}
           </p>
           <CompareToggle slug={vehicle.slug} />
         </div>
 
-        <div className="mt-auto flex gap-2 pt-2">
-          <Button href={`/catalogo/${vehicle.slug}`} variant="outline" size="sm" className="flex-1">
+        <div className="mt-auto flex flex-col gap-2 pt-1 min-[425px]:flex-row md:pt-2">
+          <Button
+            href={`/catalogo/${vehicle.slug}`}
+            variant="outline"
+            size="sm"
+            className="min-[425px]:flex-1"
+          >
             Ver detalle
           </Button>
           <Button
             href={getWhatsAppUrl(vehicle)}
             variant="ghost"
             size="sm"
-            className="flex-1"
+            className="min-[425px]:flex-1"
           >
             WhatsApp
           </Button>

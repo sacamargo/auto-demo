@@ -10,8 +10,8 @@ export function CompareBar() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 backdrop-blur-md fade-in">
-      <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-6 py-4 md:px-12">
-        <p className="text-sm text-foreground">
+      <div className="mx-auto flex max-w-content flex-col gap-3 px-gutter py-3 min-[425px]:flex-row min-[425px]:items-center min-[425px]:justify-between min-[425px]:py-4 4k:max-w-content-wide">
+        <p className="text-xs text-foreground min-[375px]:text-sm">
           <span className="font-medium">{slugs.length}</span>
           <span className="text-muted">
             {' '}
@@ -19,10 +19,10 @@ export function CompareBar() {
           </span>
         </p>
         <div className="flex gap-2">
-          <Button variant="ghost" size="sm" onClick={clear}>
+          <Button variant="ghost" size="sm" onClick={clear} className="flex-1 min-[425px]:flex-none">
             Limpiar
           </Button>
-          <Button href={getCompareUrl(slugs)} size="sm">
+          <Button href={getCompareUrl(slugs)} size="sm" className="flex-1 min-[425px]:flex-none">
             Comparar
           </Button>
         </div>

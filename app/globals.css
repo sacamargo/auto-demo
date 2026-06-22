@@ -21,7 +21,39 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --header-height: 4.5rem;
+  --header-height: 4rem;
+  --page-gutter: 1rem;
+  --section-y: 3rem;
+  --section-y-lg: 3.75rem;
+}
+
+@media (min-width: 375px) {
+  :root {
+    --page-gutter: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 4.5rem;
+    --page-gutter: 2rem;
+    --section-y: 4.5rem;
+    --section-y-lg: 5.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 2.5rem;
+    --section-y: 6rem;
+    --section-y-lg: 7.5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --page-gutter: 3rem;
+  }
 }
 
 @layer base {
@@ -51,6 +83,44 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .page-title {
+    @apply text-3xl text-balance min-[375px]:text-4xl md:text-5xl;
+  }
+
+  .page-title-lg {
+    @apply text-[2rem] leading-[1.05] text-balance min-[375px]:text-4xl sm:text-5xl md:text-6xl laptop-l:text-7xl;
+  }
+
+  .price-display {
+    @apply break-words font-mono text-2xl tabular-nums min-[375px]:text-3xl;
+  }
+
+  .price-display-sm {
+    @apply break-words font-mono text-base tabular-nums min-[375px]:text-lg;
+  }
+
+  .action-stack {
+    @apply flex flex-col gap-3 min-[425px]:flex-row min-[425px]:flex-wrap;
+  }
+
+  .action-stack > .action-btn {
+    @apply w-full min-[425px]:w-auto;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
   }
 
   .pressable {

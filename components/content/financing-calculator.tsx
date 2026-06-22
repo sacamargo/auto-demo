@@ -87,16 +87,16 @@ export function FinancingCalculator({
   }
 
   return (
-    <FadeIn className={cn('rounded-md border border-border bg-surface p-6 md:p-8', className)}>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <FadeIn className={cn('rounded-md border border-border bg-surface p-4 min-[375px]:p-6 md:p-8', className)}>
+      <div className="flex flex-col gap-3 min-[425px]:flex-row min-[425px]:items-start min-[425px]:justify-between min-[425px]:gap-4">
         <div>
-          <h2 className="font-serif text-2xl">Simula tu cuota</h2>
+          <h2 className="font-serif text-xl min-[375px]:text-2xl">Simula tu cuota</h2>
           {vehicleLabel && (
             <p className="mt-1 text-sm text-accent">{vehicleLabel}</p>
           )}
         </div>
         {!priceEditable && (
-          <p className="font-mono text-xl text-foreground md:text-2xl">
+          <p className="price-display-sm text-foreground">
             {formatPriceCop(effectivePrice)}
           </p>
         )}
@@ -160,7 +160,7 @@ export function FinancingCalculator({
         </div>
       </div>
 
-      <div className="mt-8 grid gap-4 border-t border-border pt-8 sm:grid-cols-3">
+      <div className="mt-8 grid gap-4 border-t border-border pt-6 min-[425px]:grid-cols-3 min-[425px]:pt-8">
         <ResultItem label="Cuota inicial" value={formatPriceCop(downPayment)} />
         <ResultItem label="Monto financiado" value={formatPriceCop(financed)} />
         <ResultItem
@@ -234,7 +234,7 @@ function ResultItem({
       <p
         className={cn(
           'mt-1 font-mono',
-          highlight ? 'text-2xl text-accent' : 'text-lg text-foreground'
+          highlight ? 'text-xl text-accent min-[375px]:text-2xl' : 'text-base text-foreground min-[375px]:text-lg'
         )}
       >
         {value}

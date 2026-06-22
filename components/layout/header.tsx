@@ -36,7 +36,7 @@ export function Header() {
       )}
     >
       <Container>
-        <div className="flex h-[var(--header-height)] items-center justify-between gap-6">
+        <div className="flex h-[var(--header-height)] items-center justify-between gap-3 min-[375px]:gap-4 md:gap-6">
           <Logo />
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Principal">
@@ -88,7 +88,7 @@ export function Header() {
 
         {menuOpen && (
           <nav
-            className="border-t border-border py-6 md:hidden"
+            className="border-t border-border py-4 min-[375px]:py-6 md:hidden"
             aria-label="Móvil"
           >
             <ul className="space-y-4">
