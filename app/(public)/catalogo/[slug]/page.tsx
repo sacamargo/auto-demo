@@ -61,14 +61,14 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   const images = vehicle.vehicle_images ?? [];
 
   return (
-    <Container className="py-section">
-      <div className="fade-in mb-6">
+    <Container className="py-10 md:py-section">
+      <div className="fade-in mb-4 md:mb-6">
         <Button href="/catalogo" variant="ghost" size="sm">
           ← Volver al catálogo
         </Button>
       </div>
 
-      <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+      <div className="grid gap-8 md:gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 laptop-l:gap-20">
         <div className="fade-in">
           <VehicleGallery
             images={images}
@@ -76,24 +76,24 @@ export default async function VehicleDetailPage({ params }: PageProps) {
           />
         </div>
 
-        <div className="fade-in fade-in-delay-1 space-y-8">
-          <div className="space-y-4">
+        <div className="fade-in fade-in-delay-1 space-y-6 md:space-y-8">
+          <div className="space-y-3 md:space-y-4">
             {vehicle.status !== 'disponible' && (
               <Badge status={vehicle.status} />
             )}
-            <h1 className="text-4xl md:text-5xl">
+            <h1 className="page-title">
               {vehicle.brand} {vehicle.model}
             </h1>
-            <p className="text-lg text-muted">
+            <p className="text-base text-muted min-[375px]:text-lg">
               {vehicle.year} · {getTransmissionLabel(vehicle.transmission)} ·{' '}
               {getFuelLabel(vehicle.fuel_type)}
             </p>
-            <p className="font-mono text-3xl text-foreground">
+            <p className="price-display text-foreground">
               {formatPriceCop(vehicle.price_cop)}
             </p>
           </div>
 
-          <dl className="grid grid-cols-2 gap-4 border-y border-border py-6 text-sm">
+          <dl className="grid grid-cols-1 gap-4 border-y border-border py-5 text-sm min-[425px]:grid-cols-2 md:py-6">
             <SpecItem label="Kilometraje" value={formatMileage(vehicle.mileage_km)} />
             <SpecItem label="Color" value={vehicle.color} />
             <SpecItem label="Combustible" value={getFuelLabel(vehicle.fuel_type)} />
@@ -110,19 +110,24 @@ export default async function VehicleDetailPage({ params }: PageProps) {
             <p className="text-muted leading-relaxed">{vehicle.description}</p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <Button href={getWhatsAppUrl(vehicle)} size="lg">
+          <div className="action-stack">
+            <Button href={getWhatsAppUrl(vehicle)} size="lg" className="action-btn">
               Contactar por WhatsApp
             </Button>
-            <Button href={`/catalogo/${vehicle.slug}/financiacion`} variant="outline" size="lg">
+            <Button
+              href={`/catalogo/${vehicle.slug}/financiacion`}
+              variant="outline"
+              size="lg"
+              className="action-btn"
+            >
               Simular financiación
             </Button>
-            <Button href="#cotizacion" variant="ghost" size="lg">
+            <Button href="#cotizacion" variant="ghost" size="lg" className="action-btn">
               Solicitar cotización
             </Button>
           </div>
 
-          <div className="flex items-center gap-3 border-t border-border pt-6">
+          <div className="flex flex-col gap-3 border-t border-border pt-5 min-[425px]:flex-row min-[425px]:items-center md:pt-6">
             <span className="text-sm text-muted">Comparar con otros:</span>
             <CompareToggle slug={vehicle.slug} />
           </div>
@@ -133,12 +138,12 @@ export default async function VehicleDetailPage({ params }: PageProps) {
         id="cotizacion"
         className="mt-section border-t border-border pt-section"
       >
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
               Cotización
             </p>
-            <h2 className="mt-3 font-serif text-3xl">
+            <h2 className="mt-3 font-serif text-2xl min-[375px]:text-3xl">
               ¿Te interesa este vehículo?
             </h2>
             <p className="mt-4 text-muted">

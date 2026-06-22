@@ -24,7 +24,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
       <Container className="py-section">
-        <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.2fr_1fr_1fr] md:gap-12">
           <div className="space-y-4">
             <Logo />
             <p className="max-w-sm text-sm text-muted">
@@ -78,9 +78,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-border pt-8 text-sm text-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-border pt-6 text-xs text-muted min-[375px]:mt-12 min-[375px]:pt-8 min-[375px]:text-sm md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} {siteConfig.name}. Todos los derechos reservados.</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
             {footerLinks.legal.map((link) => (
               <Link
                 key={link.href}

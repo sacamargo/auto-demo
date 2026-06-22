@@ -37,12 +37,12 @@ export function CompareView({ allVehicles }: CompareViewProps) {
   );
 
   return (
-    <Container className="py-section">
-      <header className="fade-in mb-10 max-w-2xl">
+    <Container className="py-10 md:py-section">
+      <header className="fade-in mb-8 max-w-2xl md:mb-10">
         <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
           Herramienta
         </p>
-        <h1 className="mt-3 text-4xl md:text-5xl">Comparar</h1>
+        <h1 className="page-title mt-3">Comparar</h1>
         <p className="mt-4 text-muted">
           Selecciona hasta {MAX_COMPARE} vehículos para comparar especificaciones
           lado a lado.
@@ -52,15 +52,15 @@ export function CompareView({ allVehicles }: CompareViewProps) {
       {comparedVehicles.length >= 2 ? (
         <div className="fade-in fade-in-delay-1">
           <CompareTable vehicles={comparedVehicles} />
-          <div className="mt-8 flex justify-end">
-            <Button variant="ghost" onClick={clear}>
+          <div className="mt-8 flex justify-stretch min-[425px]:justify-end">
+            <Button variant="ghost" onClick={clear} className="w-full min-[425px]:w-auto">
               Limpiar comparación
             </Button>
           </div>
         </div>
       ) : comparedVehicles.length === 1 ? (
-        <div className="fade-in rounded-md border border-border bg-surface p-8 text-center">
-          <p className="font-serif text-xl">Agrega al menos un vehículo más</p>
+        <div className="fade-in rounded-md border border-border bg-surface p-6 text-center min-[375px]:p-8">
+          <p className="font-serif text-lg min-[375px]:text-xl">Agrega al menos un vehículo más</p>
           <p className="mt-2 text-sm text-muted">
             Selecciona otro vehículo desde el catálogo para comparar.
           </p>
@@ -69,8 +69,8 @@ export function CompareView({ allVehicles }: CompareViewProps) {
           </Button>
         </div>
       ) : (
-        <div className="fade-in rounded-md border border-border bg-surface p-8 text-center">
-          <p className="font-serif text-xl">Ningún vehículo seleccionado</p>
+        <div className="fade-in rounded-md border border-border bg-surface p-6 text-center min-[375px]:p-8">
+          <p className="font-serif text-lg min-[375px]:text-xl">Ningún vehículo seleccionado</p>
           <p className="mt-2 text-sm text-muted">
             Usa el botón &ldquo;Comparar&rdquo; en las tarjetas del catálogo.
           </p>
@@ -83,7 +83,7 @@ export function CompareView({ allVehicles }: CompareViewProps) {
       {comparedVehicles.length > 0 && comparedVehicles.length < MAX_COMPARE && (
         <section className="mt-section border-t border-border pt-section">
           <h2 className="font-serif text-2xl">Agregar a la comparación</h2>
-          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-6 min-[425px]:grid-cols-2 min-[425px]:gap-8 lg:grid-cols-3">
             {availableToAdd.slice(0, 3).map((vehicle, index) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
             ))}

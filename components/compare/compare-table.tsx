@@ -50,8 +50,8 @@ function getImage(vehicle: Vehicle) {
 
 export function CompareTable({ vehicles }: CompareTableProps) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[640px] border-collapse text-sm">
+    <div className="-mx-gutter overflow-x-auto px-gutter scrollbar-thin md:mx-0 md:px-0">
+      <table className="w-full min-w-[36rem] border-collapse text-sm min-[768px]:min-w-[640px]">
         <thead>
           <tr>
             <th className="w-36 border-b border-border p-4 text-left text-xs font-medium uppercase tracking-[0.1em] text-muted">

@@ -7,6 +7,16 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      xs: '375px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      'laptop-l': '1440px',
+      '2xl': '1536px',
+      '4k': '2560px',
+    },
     extend: {
       colors: {
         background: 'var(--background)',
@@ -26,10 +36,12 @@ const config: Config = {
       },
       maxWidth: {
         content: '80rem',
+        'content-wide': '96rem',
       },
       spacing: {
-        section: '6rem',
-        'section-lg': '7.5rem',
+        section: 'var(--section-y)',
+        'section-lg': 'var(--section-y-lg)',
+        gutter: 'var(--page-gutter)',
       },
       borderRadius: {
         DEFAULT: '6px',
