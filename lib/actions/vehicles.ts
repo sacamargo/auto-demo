@@ -12,10 +12,17 @@ import { createAdminClient } from '@/lib/supabase/admin';
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
-type ActionResult = {
+export type ActionResult = {
   success: boolean;
   error?: string;
   vehicleId?: string;
+  slug?: string;
+};
+
+type RegisterImageInput = {
+  vehicleId: string;
+  storagePath: string;
+  sortOrder: number;
 };
 
 function getAdminDb(): SupabaseClient {
@@ -38,6 +45,24 @@ function parseVehicleForm(formData: FormData) {
   };
 
   return vehicleSchema.safeParse(raw);
+}
+
+async function deleteImages(supabase: SupabaseClient, imageIds: string[]) {
+  for (const imageId of imageIds) {
+    const { data: image } = await supabase
+      .from('vehicle_images')
+      .select('storage_path')
+      .eq('id', imageId)
+      .single();
+
+    if (image?.storage_path && !image.storage_path.startsWith('http')) {
+      await supabase.storage
+        .from('vehicle-images')
+        .remove([image.storage_path]);
+    }
+
+    await supabase.from('vehicle_images').delete().eq('id', imageId);
+  }
 }
 
 async function uploadImages(
@@ -81,28 +106,16 @@ async function uploadImages(
   }
 }
 
-async function deleteImages(supabase: SupabaseClient, imageIds: string[]) {
-  for (const imageId of imageIds) {
-    const { data: image } = await supabase
-      .from('vehicle_images')
-      .select('storage_path')
-      .eq('id', imageId)
-      .single();
-
-    if (image?.storage_path && !image.storage_path.startsWith('http')) {
-      await supabase.storage
-        .from('vehicle-images')
-        .remove([image.storage_path]);
-    }
-
-    await supabase.from('vehicle_images').delete().eq('id', imageId);
-  }
+export async function revalidateVehiclePages(vehicleId: string, slug: string) {
+  await revalidateCatalog();
+  revalidatePath('/admin/vehiculos');
+  revalidatePath(`/admin/vehiculos/${vehicleId}`);
+  revalidatePath(`/admin/vehiculos/${vehicleId}/preview`);
+  revalidatePath(`/catalogo/${slug}`);
 }
 
-export async function saveVehicle(
-  _prev: ActionResult,
-  formData: FormData
-): Promise<ActionResult> {
+/** Guarda datos del vehículo y borra fotos marcadas. Sin subir fotos nuevas. */
+export async function saveVehicleMetadata(formData: FormData): Promise<ActionResult> {
   try {
     await requireAdmin();
 
@@ -169,6 +182,107 @@ export async function saveVehicle(
       await deleteImages(supabase, deletedIds);
     }
 
+    revalidatePath('/admin/vehiculos');
+    revalidatePath(`/admin/vehiculos/${id}`);
+
+    return { success: true, vehicleId: id, slug };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Error al guardar',
+    };
+  }
+}
+
+/** Registra en BD una foto ya subida a Storage (desde el cliente admin). */
+export async function registerVehicleImage(
+  input: RegisterImageInput
+): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+
+    const { vehicleId, storagePath, sortOrder } = input;
+
+    if (!vehicleId || !storagePath) {
+      return { success: false, error: 'Datos de imagen incompletos' };
+    }
+
+    const supabase = getAdminDb();
+
+    const { data: vehicle, error: vehicleError } = await supabase
+      .from('vehicles')
+      .select('slug')
+      .eq('id', vehicleId)
+      .single();
+
+    if (vehicleError || !vehicle) {
+      return { success: false, error: 'Vehículo no encontrado' };
+    }
+
+    const { error: dbError } = await supabase.from('vehicle_images').insert({
+      vehicle_id: vehicleId,
+      storage_path: storagePath,
+      sort_order: sortOrder,
+    });
+
+    if (dbError) {
+      return { success: false, error: 'Error al registrar la imagen' };
+    }
+
+    revalidatePath(`/admin/vehiculos/${vehicleId}`);
+    revalidatePath(`/admin/vehiculos/${vehicleId}/preview`);
+
+    return { success: true, vehicleId, slug: vehicle.slug as string };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Error al registrar imagen',
+    };
+  }
+}
+
+/** Revalida catálogo cuando termina la cola de fotos de un vehículo. */
+export async function finalizeVehicleUpload(vehicleId: string): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    const supabase = getAdminDb();
+
+    const { data: vehicle, error } = await supabase
+      .from('vehicles')
+      .select('slug')
+      .eq('id', vehicleId)
+      .single();
+
+    if (error || !vehicle) {
+      return { success: false, error: 'Vehículo no encontrado' };
+    }
+
+    await revalidateVehiclePages(vehicleId, vehicle.slug as string);
+
+    return { success: true, vehicleId, slug: vehicle.slug as string };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Error al publicar',
+    };
+  }
+}
+
+/** Flujo legacy: datos + fotos en un solo request (será reemplazado por la cola). */
+export async function saveVehicle(
+  _prev: ActionResult,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const metadataResult = await saveVehicleMetadata(formData);
+    if (!metadataResult.success || !metadataResult.vehicleId) {
+      return metadataResult;
+    }
+
+    const id = metadataResult.vehicleId;
+    const slug = metadataResult.slug ?? '';
+    const supabase = getAdminDb();
+
     const existingCount = Number(formData.get('existing_image_count') ?? 0);
     const files = formData
       .getAll('images')
@@ -178,13 +292,11 @@ export async function saveVehicle(
       await uploadImages(supabase, id, files, existingCount);
     }
 
-    await revalidateCatalog();
-    revalidatePath('/admin/vehiculos');
-    revalidatePath(`/admin/vehiculos/${id}`);
-    revalidatePath(`/admin/vehiculos/${id}/preview`);
-    revalidatePath(`/catalogo/${slug}`);
+    if (slug) {
+      await revalidateVehiclePages(id, slug);
+    }
 
-    return { success: true, vehicleId: id };
+    return { success: true, vehicleId: id, slug };
   } catch (err) {
     return {
       success: false,
