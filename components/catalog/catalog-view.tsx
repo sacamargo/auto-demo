@@ -61,7 +61,7 @@ export function CatalogView({ vehicles }: CatalogViewProps) {
         </button>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_1fr] lg:gap-10">
+      <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,240px)_1fr] lg:gap-10">
         <CatalogFiltersPanel
           filters={filters}
           brands={brands}
@@ -83,7 +83,7 @@ export function CatalogView({ vehicles }: CatalogViewProps) {
           </p>
 
           {filtered.length > 0 ? (
-            <div className="grid gap-6 min-[425px]:grid-cols-2 min-[425px]:gap-8 xl:grid-cols-3">
+            <div className="grid min-w-0 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
               {filtered.map((vehicle, index) => (
                 <VehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
               ))}

@@ -15,7 +15,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-border">
+      <section className="relative overflow-x-clip border-b border-border">
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
           style={{
@@ -24,8 +24,8 @@ export default async function HomePage() {
           }}
         />
         <Container className="py-section-lg">
-          <div className="grid items-center gap-10 md:gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 laptop-l:gap-20">
-            <div className="fade-in max-w-xl">
+          <div className="grid min-w-0 items-center gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 laptop-l:gap-20">
+            <div className="fade-in min-w-0 max-w-xl">
               <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
                 Concesionario premium
               </p>
@@ -48,7 +48,7 @@ export default async function HomePage() {
             </div>
 
             {heroVehicle && heroImage && (
-              <div className="fade-in fade-in-delay-1 relative aspect-[4/5] max-h-[70vh] overflow-hidden rounded-md border border-border bg-surface min-[768px]:max-h-none">
+              <div className="fade-in fade-in-delay-1 relative w-full min-w-0 aspect-[4/3] overflow-hidden rounded-md border border-border bg-background md:aspect-[4/5]">
                 <Image
                   src={resolveImageUrl(
                     heroImage.storage_path,
@@ -56,8 +56,8 @@ export default async function HomePage() {
                   )}
                   alt={`${heroVehicle.brand} ${heroVehicle.model}`}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 45vw"
                   priority
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-4 min-[375px]:p-6 md:p-8">
@@ -88,7 +88,7 @@ export default async function HomePage() {
             </Button>
           </div>
 
-          <div className="mt-10 grid gap-6 min-[425px]:grid-cols-2 min-[425px]:gap-8 lg:grid-cols-3">
+          <div className="mt-10 grid min-w-0 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {featured.map((vehicle, index) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
             ))}
@@ -100,8 +100,8 @@ export default async function HomePage() {
 
       <section id="contacto" className="border-t border-border bg-surface py-section">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-            <div className="fade-in">
+          <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
+            <div className="fade-in min-w-0">
               <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
                 Contacto directo
               </p>

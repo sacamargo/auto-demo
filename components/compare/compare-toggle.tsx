@@ -28,7 +28,7 @@ export function CompareToggle({ slug, className }: CompareToggleProps) {
           ? 'text-accent'
           : disabled
             ? 'cursor-not-allowed text-muted/50'
-            : 'text-muted hover:text-foreground',
+            : 'text-foreground/70 hover:text-foreground',
         className
       )}
       aria-pressed={selected}

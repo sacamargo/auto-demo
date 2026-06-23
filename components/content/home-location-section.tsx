@@ -21,7 +21,7 @@ export function HomeLocationSection() {
   return (
     <section className="border-t border-border py-section">
       <Container>
-        <div className="grid gap-8 md:gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:items-center laptop-l:gap-20">
+        <div className="grid min-w-0 gap-8 md:gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16 laptop-l:gap-20">
           <FadeIn>
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
               Showroom

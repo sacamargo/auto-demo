@@ -13,7 +13,7 @@ export function Logo({ className }: LogoProps) {
         viewBox="0 0 160 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="h-7 w-auto text-foreground"
+        className="h-6 w-auto text-foreground min-[375px]:h-7"
         aria-label={siteConfig.name}
       >
         <text
@@ -27,7 +27,7 @@ export function Logo({ className }: LogoProps) {
         <text
           x="62"
           y="26"
-          className="fill-current font-serif text-[28px] italic opacity-70"
+          className="fill-current font-serif text-[28px] italic"
           style={{ fontFamily: 'var(--font-serif), Georgia, serif' }}
         >
           Demo
