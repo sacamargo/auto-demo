@@ -73,12 +73,12 @@ export function FinancingPageContent({
               process.env.NEXT_PUBLIC_SUPABASE_URL
             )}
             alt={vehicleLabel}
-            className="aspect-[21/9] w-full object-cover image-hover"
+            className="aspect-[16/10] w-full object-cover image-hover min-[768px]:aspect-[21/9]"
           />
         </FadeIn>
       )}
 
-      <div className="mt-section grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div className="mt-section grid gap-8 md:gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
         <FinancingCalculator
           vehiclePrice={referencePrice}
           vehicleLabel={vehicleLabel}
@@ -94,15 +94,16 @@ export function FinancingPageContent({
                 : 'Elige un vehículo del catálogo para una simulación exacta, o contáctanos para una orientación general.'}
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="action-stack">
             <Button
               href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${whatsappMessage}`}
               size="lg"
+              className="action-btn"
             >
               Consultar financiación
             </Button>
             {!isVehiclePage && (
-              <Button href="/catalogo" variant="outline" size="lg">
+              <Button href="/catalogo" variant="outline" size="lg" className="action-btn">
                 Ver catálogo
               </Button>
             )}
@@ -111,6 +112,7 @@ export function FinancingPageContent({
                 href={`/catalogo/${vehicle!.slug}`}
                 variant="outline"
                 size="lg"
+                className="action-btn"
               >
                 Ver ficha del vehículo
               </Button>
@@ -128,12 +130,12 @@ export function FinancingPageContent({
         id="solicitud"
         className="mt-section border-t border-border pt-section"
       >
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-2 lg:gap-16">
           <FadeIn>
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
               Solicitud
             </p>
-            <h2 className="mt-3 font-serif text-3xl">
+            <h2 className="mt-3 font-serif text-2xl min-[375px]:text-3xl">
               {isVehiclePage
                 ? 'Solicita estudio de crédito'
                 : 'Cuéntanos qué buscas'}

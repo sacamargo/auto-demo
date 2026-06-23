@@ -5,19 +5,19 @@ export function FinancingBenefits() {
   return (
     <section className="mt-section">
       <FadeIn>
-        <h2 className="font-serif text-3xl">¿Por qué financiar con nosotros?</h2>
+        <h2 className="font-serif text-2xl min-[375px]:text-3xl">¿Por qué financiar con nosotros?</h2>
         <p className="mt-3 max-w-2xl text-muted">
           Proceso claro, sin sorpresas en el camino. Te acompañamos desde la simulación
           hasta la entrega del vehículo.
         </p>
       </FadeIn>
 
-      <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+      <ul className="mt-8 grid gap-4 min-[425px]:mt-10 min-[425px]:grid-cols-2 min-[425px]:gap-6">
         {financingContent.benefits.map((benefit, index) => (
           <FadeIn
             key={benefit.title}
             delay={(index % 4) as 0 | 1 | 2 | 3}
-            className="card-hover rounded-md border border-border bg-surface p-6"
+            className="card-hover rounded-md border border-border bg-surface p-4 min-[375px]:p-6"
           >
             <h3 className="font-serif text-xl">{benefit.title}</h3>
             <p className="mt-3 text-sm text-muted leading-relaxed">
@@ -34,7 +34,7 @@ export function FinancingSteps() {
   return (
     <section className="mt-section border-t border-border pt-section">
       <FadeIn>
-        <h2 className="font-serif text-3xl">Cómo funciona</h2>
+        <h2 className="font-serif text-2xl min-[375px]:text-3xl">Cómo funciona</h2>
         <p className="mt-3 max-w-2xl text-muted">
           Cuatro pasos, un solo equipo de contacto.
         </p>
@@ -62,7 +62,7 @@ export function FinancingDocuments() {
   return (
     <section className="mt-section border-t border-border pt-section">
       <FadeIn>
-        <h2 className="font-serif text-3xl">Documentos habituales</h2>
+        <h2 className="font-serif text-2xl min-[375px]:text-3xl">Documentos habituales</h2>
         <p className="mt-3 max-w-2xl text-muted">
           La lista exacta puede variar según entidad financiera y tipo de vinculación
           laboral.

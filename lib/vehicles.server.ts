@@ -22,12 +22,14 @@ async function fetchPublicVehicles(): Promise<Vehicle[]> {
 
   const vehicles = (data ?? []) as Vehicle[];
 
-  return vehicles.map((vehicle) => ({
-    ...vehicle,
-    vehicle_images: (vehicle.vehicle_images ?? []).sort(
-      (a, b) => a.sort_order - b.sort_order
-    ),
-  }));
+  return vehicles
+    .map((vehicle) => ({
+      ...vehicle,
+      vehicle_images: (vehicle.vehicle_images ?? []).sort(
+        (a, b) => a.sort_order - b.sort_order
+      ),
+    }))
+    .filter((vehicle) => (vehicle.vehicle_images?.length ?? 0) > 0);
 }
 
 export const getPublicVehicles = unstable_cache(

@@ -21,12 +21,12 @@ export function HomeLocationSection() {
   return (
     <section className="border-t border-border py-section">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:items-center">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:items-center laptop-l:gap-20">
           <FadeIn>
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
               Showroom
             </p>
-            <h2 className="mt-3 text-3xl md:text-4xl">Visítanos en Riomar</h2>
+            <h2 className="mt-3 text-2xl min-[375px]:text-3xl md:text-4xl">Visítanos en Riomar</h2>
             <p className="mt-4 max-w-md text-muted leading-relaxed">
               Atención personalizada en Barranquilla. Agenda tu visita para conocer
               el vehículo en persona o resolver dudas de financiación.
@@ -39,17 +39,17 @@ export function HomeLocationSection() {
               )}
             </address>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button href={whatsappUrl} size="sm">
+            <div className="action-stack mt-6 min-[375px]:mt-8">
+              <Button href={whatsappUrl} size="sm" className="action-btn">
                 Agendar visita
               </Button>
-              <Button href="/ubicacion" variant="outline" size="sm">
+              <Button href="/ubicacion" variant="outline" size="sm" className="action-btn">
                 Horarios y mapa
               </Button>
-              <Button href={googleUrl} variant="ghost" size="sm">
+              <Button href={googleUrl} variant="ghost" size="sm" className="action-btn">
                 Google Maps
               </Button>
-              <Button href={wazeUrl} variant="ghost" size="sm">
+              <Button href={wazeUrl} variant="ghost" size="sm" className="action-btn">
                 Waze
               </Button>
             </div>

@@ -31,12 +31,12 @@ export function CatalogView({ vehicles }: CatalogViewProps) {
   const activeCount = countActiveFilters(filters);
 
   return (
-    <Container className="py-section">
-      <header className="fade-in mb-10 max-w-2xl">
+    <Container className="py-10 md:py-section">
+      <header className="fade-in mb-8 max-w-2xl md:mb-10">
         <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
           Inventario
         </p>
-        <h1 className="mt-3 text-4xl md:text-5xl">Catálogo</h1>
+        <h1 className="page-title mt-3">Catálogo</h1>
         <p className="mt-4 text-muted">
           {vehicles.length} vehículos disponibles. Filtra por marca, precio, año
           o características técnicas.
@@ -61,7 +61,7 @@ export function CatalogView({ vehicles }: CatalogViewProps) {
         </button>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[240px_1fr]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_1fr] lg:gap-10">
         <CatalogFiltersPanel
           filters={filters}
           brands={brands}
@@ -70,7 +70,7 @@ export function CatalogView({ vehicles }: CatalogViewProps) {
           onChange={setFilters}
           onReset={() => setFilters(defaultFilters)}
           className={cn(
-            'rounded-md border border-border bg-surface p-6',
+            'rounded-md border border-border bg-surface p-4 min-[375px]:p-6',
             mobileFiltersOpen ? 'block' : 'hidden lg:block'
           )}
         />
@@ -83,13 +83,13 @@ export function CatalogView({ vehicles }: CatalogViewProps) {
           </p>
 
           {filtered.length > 0 ? (
-            <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-6 min-[425px]:grid-cols-2 min-[425px]:gap-8 xl:grid-cols-3">
               {filtered.map((vehicle, index) => (
                 <VehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
               ))}
             </div>
           ) : (
-            <div className="rounded-md border border-border bg-surface p-12 text-center">
+            <div className="rounded-md border border-border bg-surface p-8 text-center min-[375px]:p-12">
               <p className="font-serif text-xl text-foreground">
                 Sin resultados
               </p>

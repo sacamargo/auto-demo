@@ -75,14 +75,14 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
         </button>
 
         {urls.length > 1 && (
-          <div className="flex gap-2 overflow-x-auto pb-1">
+          <div className="-mx-gutter flex snap-x snap-mandatory gap-2 overflow-x-auto px-gutter pb-1 scrollbar-thin min-[768px]:mx-0 min-[768px]:px-0">
             {urls.map((url, index) => (
               <button
                 key={url}
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 className={cn(
-                  'relative h-16 w-24 shrink-0 overflow-hidden rounded-sm border transition-colors duration-200 ease-out',
+                  'relative h-14 w-[4.5rem] shrink-0 snap-start overflow-hidden rounded-sm border transition-colors duration-200 ease-out min-[375px]:h-16 min-[375px]:w-24',
                   index === activeIndex
                     ? 'border-foreground'
                     : 'border-border hover:border-muted'
