@@ -83,7 +83,7 @@ export function CompareView({ allVehicles }: CompareViewProps) {
       {comparedVehicles.length > 0 && comparedVehicles.length < MAX_COMPARE && (
         <section className="mt-section border-t border-border pt-section">
           <h2 className="font-serif text-2xl">Agregar a la comparación</h2>
-          <div className="mt-8 grid gap-6 min-[425px]:grid-cols-2 min-[425px]:gap-8 lg:grid-cols-3">
+          <div className="mt-8 grid min-w-0 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {availableToAdd.slice(0, 3).map((vehicle, index) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
             ))}

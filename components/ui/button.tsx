@@ -9,7 +9,7 @@ const variantStyles: Record<ButtonVariant, string> = {
     'bg-foreground text-surface hover:bg-[#333333] border border-foreground',
   secondary:
     'bg-surface text-foreground border border-border hover:border-foreground',
-  ghost: 'bg-transparent text-foreground hover:bg-black/[0.03]',
+  ghost: 'bg-transparent text-foreground hover:bg-black/[0.05]',
   outline:
     'bg-transparent text-foreground border border-border hover:border-foreground',
 };

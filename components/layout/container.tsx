@@ -8,7 +8,9 @@ export function Container({ narrow, className, children, ...props }: ContainerPr
   return (
     <div
       className={cn(
-        'mx-auto w-full px-gutter',
+        'mx-auto w-full max-w-full',
+        'ps-[max(var(--page-gutter),env(safe-area-inset-left))]',
+        'pe-[max(var(--page-gutter),env(safe-area-inset-right))]',
         narrow ? 'max-w-4xl' : 'max-w-content 4k:max-w-content-wide',
         className
       )}
