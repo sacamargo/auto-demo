@@ -61,22 +61,22 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   const images = vehicle.vehicle_images ?? [];
 
   return (
-    <Container className="py-10 md:py-section">
-      <div className="fade-in mb-4 md:mb-6">
-        <Button href="/catalogo" variant="ghost" size="sm">
+    <Container className="py-8 md:py-section">
+      <div className="fade-in mb-3 md:mb-6">
+        <Button href="/catalogo" variant="ghost" size="sm" className="-ms-2">
           ← Volver al catálogo
         </Button>
       </div>
 
-      <div className="grid gap-8 md:gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 laptop-l:gap-20">
-        <div className="fade-in">
+      <div className="grid min-w-0 gap-8 md:gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 laptop-l:gap-20">
+        <div className="fade-in min-w-0">
           <VehicleGallery
             images={images}
             alt={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
           />
         </div>
 
-        <div className="fade-in fade-in-delay-1 space-y-6 md:space-y-8">
+        <div className="fade-in fade-in-delay-1 min-w-0 space-y-6 md:space-y-8">
           <div className="space-y-3 md:space-y-4">
             {vehicle.status !== 'disponible' && (
               <Badge status={vehicle.status} />

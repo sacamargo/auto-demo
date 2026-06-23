@@ -11,7 +11,7 @@ export default function PublicLayout({
   return (
     <CompareProvider>
       <Header />
-      <main className="pb-28 min-[425px]:pb-24">{children}</main>
+      <main className="w-full overflow-x-clip pb-28 min-[425px]:pb-24">{children}</main>
       <Footer />
       <CompareBar />
     </CompareProvider>

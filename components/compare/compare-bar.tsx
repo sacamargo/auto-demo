@@ -9,11 +9,11 @@ export function CompareBar() {
   if (slugs.length === 0) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 backdrop-blur-md fade-in">
-      <div className="mx-auto flex max-w-content flex-col gap-3 px-gutter py-3 min-[425px]:flex-row min-[425px]:items-center min-[425px]:justify-between min-[425px]:py-4 4k:max-w-content-wide">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_16px_rgba(0,0,0,0.05)] fade-in">
+      <div className="mx-auto flex max-w-content flex-col gap-3 ps-[max(var(--page-gutter),env(safe-area-inset-left))] pe-[max(var(--page-gutter),env(safe-area-inset-right))] py-3 min-[425px]:flex-row min-[425px]:items-center min-[425px]:justify-between min-[425px]:py-4 4k:max-w-content-wide">
         <p className="text-xs text-foreground min-[375px]:text-sm">
           <span className="font-medium">{slugs.length}</span>
-          <span className="text-muted">
+          <span className="text-foreground/65">
             {' '}
             de {MAX_COMPARE} seleccionados para comparar
           </span>

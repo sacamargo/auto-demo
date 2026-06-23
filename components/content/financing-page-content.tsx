@@ -73,12 +73,12 @@ export function FinancingPageContent({
               process.env.NEXT_PUBLIC_SUPABASE_URL
             )}
             alt={vehicleLabel}
-            className="aspect-[16/10] w-full object-cover image-hover min-[768px]:aspect-[21/9]"
+            className="aspect-[16/10] w-full max-w-full object-contain object-center bg-surface image-hover min-[768px]:aspect-[21/9] min-[768px]:object-cover"
           />
         </FadeIn>
       )}
 
-      <div className="mt-section grid gap-8 md:gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div className="mt-section grid min-w-0 gap-8 md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
         <FinancingCalculator
           vehiclePrice={referencePrice}
           vehicleLabel={vehicleLabel}
